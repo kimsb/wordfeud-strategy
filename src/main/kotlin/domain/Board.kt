@@ -96,4 +96,13 @@ class Board(squares: List<List<Square>>) {
         )
     }
 
+    fun withMove(move: Move): Board {
+
+        val mutableSquares = squares.map { it.toMutableList() }.toMutableList()
+        move.addedTiles.forEach{
+            mutableSquares[it.second.row][it.second.column] = Square(Tile(it.first.letter))
+        }
+        return Board(mutableSquares)
+    }
+
 }
