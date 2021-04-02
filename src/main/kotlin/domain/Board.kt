@@ -7,8 +7,16 @@ class Board(squares: List<List<Square>>) {
     val squares: List<List<Square>>
 
     init {
-        //TODO Anchors
-        this.squares = squares
+        this.squares = squares.mapIndexed { i, row ->
+            row.mapIndexed { j, square ->
+                square.copy(isAnchor = !squares[i][j].isOccupied() &&
+                    ((i == 7 && j == 7) ||
+                        squares.getOrNull(i - 1)?.get(j)?.isOccupied() == true ||
+                        squares[i].getOrNull(j - 1)?.isOccupied() == true ||
+                        squares[i].getOrNull(j + 1)?.isOccupied() == true ||
+                        squares.getOrNull(i + 1)?.get(j)?.isOccupied() == true))
+            }
+        }
     }
 
     constructor(apiBoard: ApiBoard, apiTiles: Array<ApiTile>) : this(
@@ -86,6 +94,15 @@ class Board(squares: List<List<Square>>) {
             horizontal,
             addedTiles
         )
+    }
+
+    fun withMove(move: Move): Board {
+
+        val mutableSquares = squares.map { it.toMutableList() }.toMutableList()
+        move.addedTiles.forEach{
+            mutableSquares[it.second.row][it.second.column] = Square(Tile(it.first.letter))
+        }
+        return Board(mutableSquares)
     }
 
 }
