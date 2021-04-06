@@ -47,9 +47,9 @@ private fun Board.toPrintableLines(): List<String> {
                 square.letterMultiplier == 2 -> '-'
                 else -> ' '
             }
-        }.joinToString(" ") + " |"
+        }.joinToString("  ") + " |"
     }
-    return (boardLines + listOf("---------------------------------"))
+    return (boardLines + listOf("-----------------------------------------------"))
 }
 
 private fun Simulator.SimulatedGame.printOutcome(): String {
@@ -83,7 +83,7 @@ private fun Simulator.SimulatedGame.printSimulatedRounds(gameNumber: Int, myBotS
             p2Name
         )
     )
-    println("+------------------+-----+-----+------------------+     ---------------------------------")
+    println("+------------------+-----+-----+------------------+     -----------------------------------------------")
 
     val boardLines = this.board.toPrintableLines()
     val lineCount = maxOf(17, p1Moves.size + 1)
