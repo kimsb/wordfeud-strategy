@@ -5,7 +5,7 @@ object Main {
     fun main(args: Array<String>) {
 
         //The real deal
-        TheRealDeal(MyBot(), "<yourbot>")
+        WFApi(myBot = MyBot(), botName = "<yourbot>")
 
         //Simulation
         Simulator(

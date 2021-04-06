@@ -5,7 +5,7 @@ import wordfeudapi.RestWordFeudClient
 import wordfeudapi.domain.Game
 import java.lang.Thread.sleep
 
-class TheRealDeal(
+class WFApi(
     private val myBot: Bot,
     botName: String
 ) {

@@ -32,7 +32,6 @@ class Board(squares: List<List<Square>>) {
         }
     )
 
-    //TODO corutines
     fun findAllMovesSorted(rack: Rack): List<Move> {
         val rowMoves = getRowsWithCrossChecks().flatMapIndexed { index, it ->
             it.findAcrossMoves(rack).map {
