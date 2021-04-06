@@ -1,19 +1,20 @@
 import domain.Board
-import domain.Move
 import domain.Rack
+import domain.TurnType.*
 import wordfeudapi.RestWordFeudClient
 import wordfeudapi.domain.Game
 import java.lang.Thread.sleep
 
-class WFBot {
+class TheRealDeal(
+    private val myBot: Bot,
+    botName: String
+) {
     private val wfClient = RestWordFeudClient()
-    private val botName = "jorgenbot"
 
     init {
-        //wfClient.logon(botName, botName)
-        //println("Logged in as $botName")
-        //botLoop()
-        //SimulatedGame()
+        wfClient.logon(botName, botName)
+        println("Logged in as $botName")
+        botLoop()
     }
 
     private fun botLoop() {
@@ -49,23 +50,30 @@ class WFBot {
     }
 
     private fun makeMove(game: Game) {
-        val allMovesSorted = allMovesSorted(game)
-        if (allMovesSorted.isEmpty()) {
-            if (game.bagCount >= 7) {
-                wfClient.swap(game, game.myRack.chars())
-            } else {
+        val turn = myBot.makeTurn(
+            domain.Game(
+                Board(wfClient.getBoard(game), game.tiles),
+                Rack(game.myRack.chars().toList()),
+                score = game.me.score,
+                opponentScore = game.opponent.score
+            )
+        )
+        print("${game.opponentName}: ")
+        when (turn.turnType) {
+            MOVE -> {
+                val tileMove = turn.move!!.toTileMove()
+                println("Playing: ${tileMove.word} for ${tileMove.points} points")
+                wfClient.makeMove(game, tileMove)
+            }
+            SWAP -> { //TODO finne ut hvordan swappe blank
+                val toSwap = turn.tilesToSwap.filter { it != '*' }
+                println("Swapping [${toSwap.joinToString("")}]")
+                wfClient.swap(game, toSwap.toCharArray())
+            }
+            PASS -> {
+                println("Passing")
                 wfClient.pass(game)
             }
-        } else {
-            val tileMove = allMovesSorted.first().toTileMove()
-            println("Playing: ${tileMove.word} for ${tileMove.points} points")
-            wfClient.makeMove(game, tileMove)
         }
-    }
-
-    private fun allMovesSorted(game: Game): List<Move> {
-        return Board(wfClient.getBoard(game), game.tiles)
-            .findAllMovesSorted(Rack(game.myRack.chars().toList()))
-            .sortedByDescending(Move::score)
     }
 }

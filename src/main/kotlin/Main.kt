@@ -1,9 +1,11 @@
+import Simulation.Simulator
+
 object Main {
     @JvmStatic
     fun main(args: Array<String>) {
 
         //The real deal
-        //WFBot(MyBot(), "kimbot")
+        TheRealDeal(MyBot(), "<yourbot>")
 
         //Simulation
         Simulator(

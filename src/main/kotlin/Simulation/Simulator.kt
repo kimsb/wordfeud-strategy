@@ -1,3 +1,6 @@
+package Simulation
+
+import Bot
 import Constants.letterDistribution
 import domain.*
 import domain.TurnType.*
@@ -14,8 +17,7 @@ class Simulator(
 ) {
 
     fun simulate(rounds: Int) {
-
-        val simulationResults: List<SimulatedRound>
+        val simulatedRounds: List<SimulatedRound>
         val time = measureTimeMillis {
             val deferredSimulationResults = (1..rounds).map { i ->
                 GlobalScope.async {
@@ -24,139 +26,10 @@ class Simulator(
                 }
             }
             runBlocking {
-                simulationResults = deferredSimulationResults.awaitAll()
+                simulatedRounds = deferredSimulationResults.awaitAll()
             }
         }
-
-        for (i in 1..simulationResults.size) {
-            val simulationResult = simulationResults[i - 1]
-            simulationResult.simulatedGameA.print(i, true, simulationResult.initialLetterDistribution)
-            simulationResult.simulatedGameB.print(i, false, simulationResult.initialLetterDistribution)
-        }
-        println("Simulation finished in $time ms${System.lineSeparator()}")
-        val myBotWins = simulationResults.map {
-            when {
-                it.simulatedGameA.myBotScore > it.simulatedGameA.controlBotScore -> 1.0
-                it.simulatedGameA.myBotScore == it.simulatedGameA.controlBotScore -> 0.5
-                else -> 0.0
-            } + when {
-                it.simulatedGameB.myBotScore > it.simulatedGameB.controlBotScore -> 1.0
-                it.simulatedGameB.myBotScore == it.simulatedGameB.controlBotScore -> 0.5
-                else -> 0.0
-            }
-        }.sum()
-
-        println(
-            "MyBot: $myBotWins wins (${myBotWins / (rounds * 2) * 100}%) total score: ${
-                simulationResults.map { it.simulatedGameA.myBotScore + it.simulatedGameB.myBotScore }.sum()
-            }"
-        )
-        println(
-            "ControlBot: ${(rounds * 2) - myBotWins} wins (${100 - (myBotWins / (rounds * 2) * 100)}%) total score: ${
-                simulationResults.map { it.simulatedGameA.controlBotScore + it.simulatedGameB.controlBotScore }.sum()
-            }"
-        )
-
-    }
-
-    private fun Board.toPrintableLines(): List<String> {
-        val boardLines = squares.map { row ->
-            "| " + row.map { square ->
-                when {
-                    square.isOccupied() -> square.tile!!.letter
-                    square.wordMultiplier == 3 -> '@'
-                    square.wordMultiplier == 2 -> '*'
-                    square.letterMultiplier == 3 -> '+'
-                    square.letterMultiplier == 2 -> '-'
-                    else -> ' '
-                }
-            }.joinToString(" ") + " |"
-        }
-        return (boardLines + listOf("---------------------------------"))
-    }
-
-    private fun SimulatedGame.printOutcome(): String {
-        return when {
-            this.myBotScore > this.controlBotScore -> "VICTORY!"
-            this.myBotScore == this.controlBotScore -> "DRAW"
-            else -> "LOSS..."
-        }
-    }
-
-    private fun SimulatedGame.print(gameNumber: Int, myBotStarts: Boolean, initialLetterDistribution: String) {
-        println()
-        println("Game #${gameNumber}a - ${printOutcome()}")
-        println("Bag: $initialLetterDistribution")
-
-        val p1Name = if (myBotStarts) "MyBot" else "ControlBot"
-        val p2Name = if (myBotStarts) "ControlBot" else "MyBot"
-        val p1Score = if (myBotStarts) myBotScore else controlBotScore
-        val p2Score = if (myBotStarts) controlBotScore else myBotScore
-        val p1Moves = if (myBotStarts) myBotTurns else controlBotTurns
-        val p2Moves = if (myBotStarts) controlBotTurns else myBotTurns
-
-        val headerTemplate = "| %16s | %3s | %-3s | %-16s |%n"
-        val formatTemplate = "| %16s | %3s | %-3s | %-16s |     %30s%n"
-        println("+------------------+-----+-----+------------------+")
-        print(
-            headerTemplate.format(
-                p1Name,
-                p1Score,
-                p2Score,
-                p2Name
-            )
-        )
-        println("+------------------+-----+-----+------------------+     ---------------------------------")
-
-        val boardLines = this.board.toPrintableLines()
-        val lineCount = maxOf(17, p1Moves.size + 1)
-        (0..lineCount).forEach { i ->
-            print(
-                when {
-                    i == p1Moves.size ->
-                        formatTemplate.format(
-                            "",
-                            (p1Score - p1Moves.mapNotNull { it.move?.score }.sum()).toString(),
-                            (p2Score - p2Moves.mapNotNull { it.move?.score }.sum()).toString(),
-                            "",
-                            boardLines.getOrNull(i) ?: ""
-                        )
-                    i == p1Moves.size + 1 ->
-                        "+------------------+-----+-----+------------------+     " + boardLines.getOrElse(
-                            i,
-                            defaultValue = { "" }) + System.lineSeparator()
-                    i > p1Moves.size + 1 ->
-                        "                                                        " + boardLines.getOrElse(
-                            i,
-                            defaultValue = { "" }) + System.lineSeparator()
-                    else -> formatTemplate.format(
-                        p1Moves.getOrNull(i)?.print() ?: "",
-                        p1Moves.getOrNull(i)?.score() ?: "",
-                        p2Moves.getOrNull(i)?.score() ?: "",
-                        p2Moves.getOrNull(i)?.print() ?: "",
-                        boardLines.getOrNull(i) ?: ""
-                    )
-                }
-
-            )
-        }
-        println()
-    }
-
-    private fun Turn.print(): String {
-        return when (this.turnType) {
-            MOVE -> this.move!!.word
-            SWAP -> "<swap [${this.tilesToSwap.joinToString("")}]>"
-            PASS -> "<pass>"
-        }
-    }
-
-    private fun Turn.score(): String {
-        return when (this.turnType) {
-            MOVE -> this.move!!.score
-            SWAP -> 0
-            PASS -> 0
-        }.toString()
+        printSimulatedRounds(simulatedRounds, time)
     }
 
     private fun simulateRound(): SimulatedRound {
@@ -232,7 +105,7 @@ class Simulator(
 
         val myPlayer = if (myBotStarts) player1 else player2
         val opponent = if (myBotStarts) player2 else player1
-        return Simulator.SimulatedGame(
+        return SimulatedGame(
             board = board,
             myBotScore = myPlayer.score,
             controlBotScore = opponent.score,
