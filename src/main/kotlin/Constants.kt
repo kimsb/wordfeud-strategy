@@ -1,6 +1,8 @@
 object Constants {
 
     const val VALID_LETTERS = "ABCDEFGHIJKLMNOPRSTUVWYÆØÅ"
+    const val letterDistribution =
+        "AAAAAAABBBCDDDDDEEEEEEEEEFFFFGGGGHHHIIIIIIJJKKKKLLLLLMMMNNNNNNOOOOPPRRRRRRRSSSSSSSTTTTTTTUUUVVVWYÆØØÅÅ**"
 
     private val letterScores =
         mapOf(

@@ -2,20 +2,19 @@ package domain
 
 import wordfeudapi.domain.ApiBoard
 import wordfeudapi.domain.ApiTile
+import kotlin.math.max
 
 class Board(squares: List<List<Square>>) {
-    val squares: List<List<Square>>
-
-    init {
-        this.squares = squares.mapIndexed { i, row ->
-            row.mapIndexed { j, square ->
-                square.copy(isAnchor = !squares[i][j].isOccupied() &&
-                    ((i == 7 && j == 7) ||
-                        squares.getOrNull(i - 1)?.get(j)?.isOccupied() == true ||
-                        squares[i].getOrNull(j - 1)?.isOccupied() == true ||
-                        squares[i].getOrNull(j + 1)?.isOccupied() == true ||
-                        squares.getOrNull(i + 1)?.get(j)?.isOccupied() == true))
-            }
+    private val squares: List<List<Square>> = squares.mapIndexed { i, row ->
+        row.mapIndexed { j, square ->
+            square.copy(
+                isAnchor = !squares[i][j].isOccupied() &&
+                        ((i == 7 && j == 7) ||
+                                squares.getOrNull(i - 1)?.get(j)?.isOccupied() == true ||
+                                squares[i].getOrNull(j - 1)?.isOccupied() == true ||
+                                squares[i].getOrNull(j + 1)?.isOccupied() == true ||
+                                squares.getOrNull(i + 1)?.get(j)?.isOccupied() == true)
+            )
         }
     }
 
@@ -24,14 +23,17 @@ class Board(squares: List<List<Square>>) {
             ints.mapIndexed { column, _ ->
                 val tile = apiTiles.find { it.x == column && it.y == row }
                     ?.let { Tile(if (it.isWildcard) it.character.toLowerCase() else it.character) }
-                Square(tile = tile,
+                Square(
+                    tile = tile,
                     letterMultiplier = apiBoard.getLetterMultiplier(column, row),
-                    wordMultiplier = apiBoard.getWordMultiplier(column, row))
+                    wordMultiplier = apiBoard.getWordMultiplier(column, row)
+                )
             }
         }
     )
 
-    fun findAllMoves(rack: Rack): List<Move> {
+    //TODO corutines
+    fun findAllMovesSorted(rack: Rack): List<Move> {
         val rowMoves = getRowsWithCrossChecks().flatMapIndexed { index, it ->
             it.findAcrossMoves(rack).map {
                 toMove(it, index, true)
@@ -42,7 +44,7 @@ class Board(squares: List<List<Square>>) {
                 toMove(it, index, false)
             }
         }
-        return rowMoves + columnMoves
+        return (rowMoves + columnMoves).sortedByDescending { it.score }
     }
 
     private fun getRowsWithCrossChecks(): List<Row> {
@@ -99,10 +101,27 @@ class Board(squares: List<List<Square>>) {
     fun withMove(move: Move): Board {
 
         val mutableSquares = squares.map { it.toMutableList() }.toMutableList()
-        move.addedTiles.forEach{
+        move.addedTiles.forEach {
             mutableSquares[it.second.row][it.second.column] = Square(Tile(it.first.letter))
         }
         return Board(mutableSquares)
+    }
+
+    fun remainingTilesInBagOrOnOpponentsRack(myRack: Rack): List<Char> {
+        //TODO
+        return emptyList()
+    }
+
+    fun bagCount(): Int {
+        val occupiedSquares = squares
+            .map { row ->
+                row.filter { it.isOccupied() }
+            }.count()
+        return max(0, occupiedSquares - 90)
+    }
+
+    fun swapIsAllowed(): Boolean {
+        return bagCount() >= 7
     }
 
 }
