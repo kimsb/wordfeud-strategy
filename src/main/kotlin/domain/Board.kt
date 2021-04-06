@@ -5,7 +5,7 @@ import wordfeudapi.domain.ApiTile
 import kotlin.math.max
 
 class Board(squares: List<List<Square>>) {
-    private val squares: List<List<Square>> = squares.mapIndexed { i, row ->
+    val squares: List<List<Square>> = squares.mapIndexed { i, row ->
         row.mapIndexed { j, square ->
             square.copy(
                 isAnchor = !squares[i][j].isOccupied() &&
@@ -107,17 +107,9 @@ class Board(squares: List<List<Square>>) {
         return Board(mutableSquares)
     }
 
-    fun remainingTilesInBagOrOnOpponentsRack(myRack: Rack): List<Char> {
-        //TODO
-        return emptyList()
-    }
-
     fun bagCount(): Int {
-        val occupiedSquares = squares
-            .map { row ->
-                row.filter { it.isOccupied() }
-            }.count()
-        return max(0, occupiedSquares - 90)
+        val occupiedSquares = squares.flatten().filter { it.isOccupied() }.count()
+        return max(0, 90 - occupiedSquares)
     }
 
     fun swapIsAllowed(): Boolean {
