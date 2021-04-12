@@ -4,12 +4,14 @@ object Main {
     @JvmStatic
     fun main(args: Array<String>) {
 
+        val myBot = MyBot("<botname>")
+
         //The real deal
-        WFApi(myBot = MyBot(), botName = "<yourbot>")
+        WFApi(bot = myBot)
 
         //Simulation
         Simulator(
-            myBot = MyBot(),
+            myBot = myBot,
             controlBot = ControlBot(),
         ).simulate(
             rounds = 100

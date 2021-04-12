@@ -1,15 +1,28 @@
 package Simulation
 
+import Bot
 import domain.Board
 import domain.Turn
 import domain.TurnType
 
-fun printSimulatedRounds(simulatedRounds: List<Simulator.SimulatedRound>, time: Long) {
+fun printSimulatedRounds(myBot: Bot, controlBot: Bot, simulatedRounds: List<Simulator.SimulatedRound>, time: Long) {
     val rounds = simulatedRounds.size
     for (i in 1..rounds) {
         val simulationResult = simulatedRounds[i - 1]
-        simulationResult.simulatedGameA.printSimulatedRounds(i, true, simulationResult.initialLetterDistribution)
-        simulationResult.simulatedGameB.printSimulatedRounds(i, false, simulationResult.initialLetterDistribution)
+        simulationResult.simulatedGameA.printSimulatedRounds(
+            myBot,
+            controlBot,
+            i,
+            true,
+            simulationResult.initialLetterDistribution
+        )
+        simulationResult.simulatedGameB.printSimulatedRounds(
+            myBot,
+            controlBot,
+            i,
+            false,
+            simulationResult.initialLetterDistribution
+        )
     }
     println("Simulation finished in $time ms${System.lineSeparator()}")
     val myBotWins = simulatedRounds.map {
@@ -25,12 +38,12 @@ fun printSimulatedRounds(simulatedRounds: List<Simulator.SimulatedRound>, time: 
     }.sum()
 
     println(
-        "MyBot: $myBotWins wins (${myBotWins / (rounds * 2) * 100}%) total score: ${
+        "${myBot.name}: $myBotWins wins (${myBotWins / (rounds * 2) * 100}%) total score: ${
             simulatedRounds.map { it.simulatedGameA.myBotScore + it.simulatedGameB.myBotScore }.sum()
         }"
     )
     println(
-        "ControlBot: ${(rounds * 2) - myBotWins} wins (${100 - (myBotWins / (rounds * 2) * 100)}%) total score: ${
+        "${controlBot.name}: ${(rounds * 2) - myBotWins} wins (${100 - (myBotWins / (rounds * 2) * 100)}%) total score: ${
             simulatedRounds.map { it.simulatedGameA.controlBotScore + it.simulatedGameB.controlBotScore }.sum()
         }"
     )
@@ -60,13 +73,19 @@ private fun Simulator.SimulatedGame.printOutcome(): String {
     }
 }
 
-private fun Simulator.SimulatedGame.printSimulatedRounds(gameNumber: Int, myBotStarts: Boolean, initialLetterDistribution: String) {
+private fun Simulator.SimulatedGame.printSimulatedRounds(
+    myBot: Bot,
+    controlBot: Bot,
+    gameNumber: Int,
+    myBotStarts: Boolean,
+    initialLetterDistribution: String
+) {
     println()
-    println("Game #${gameNumber}a - ${printOutcome()}")
+    println("Game #${gameNumber}${if (myBotStarts) 'a' else 'b'} - ${printOutcome()}")
     println("Bag: $initialLetterDistribution")
 
-    val p1Name = if (myBotStarts) "MyBot" else "ControlBot"
-    val p2Name = if (myBotStarts) "ControlBot" else "MyBot"
+    val p1Name = if (myBotStarts) myBot.name else controlBot.name
+    val p2Name = if (myBotStarts) controlBot.name else myBot.name
     val p1Score = if (myBotStarts) myBotScore else controlBotScore
     val p2Score = if (myBotStarts) controlBotScore else myBotScore
     val p1Moves = if (myBotStarts) myBotTurns else controlBotTurns

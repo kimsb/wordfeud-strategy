@@ -6,14 +6,13 @@ import wordfeudapi.domain.Game
 import java.lang.Thread.sleep
 
 class WFApi(
-    private val myBot: Bot,
-    botName: String
+    private val bot: Bot
 ) {
     private val wfClient = RestWordFeudClient()
 
     init {
-        wfClient.logon(botName, botName)
-        println("Logged in as $botName")
+        wfClient.logon(bot.name, bot.name)
+        println("Logged in as ${bot.name}")
         botLoop()
     }
 
@@ -50,7 +49,7 @@ class WFApi(
     }
 
     private fun makeMove(game: Game) {
-        val turn = myBot.makeTurn(
+        val turn = bot.makeTurn(
             domain.Game(
                 Board(wfClient.getBoard(game), game.tiles),
                 Rack(game.myRack.chars().toList()),
@@ -58,11 +57,11 @@ class WFApi(
                 opponentScore = game.opponent.score
             )
         )
-        print("${game.opponentName}: ")
+        print("Against ${game.opponentName}: ")
         when (turn.turnType) {
             MOVE -> {
                 val tileMove = turn.move!!.toTileMove()
-                println("Playing: ${tileMove.word} for ${tileMove.points} points")
+                println("Playing ${tileMove.word} for ${tileMove.points} points")
                 wfClient.makeMove(game, tileMove)
             }
             SWAP -> { //TODO finne ut hvordan swappe blank

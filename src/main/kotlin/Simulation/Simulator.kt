@@ -29,7 +29,7 @@ class Simulator(
                 simulatedRounds = deferredSimulationResults.awaitAll()
             }
         }
-        printSimulatedRounds(simulatedRounds, time)
+        printSimulatedRounds(myBot, controlBot, simulatedRounds, time)
     }
 
     private fun simulateRound(): SimulatedRound {

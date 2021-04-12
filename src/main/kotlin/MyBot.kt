@@ -2,7 +2,7 @@ import domain.Game
 import domain.Turn
 import domain.TurnType.*
 
-class MyBot: Bot {
+class MyBot(override val name: String) : Bot {
 
     override fun makeTurn(game: Game): Turn {
         val move = game.board.findAllMovesSorted(game.rack).firstOrNull()

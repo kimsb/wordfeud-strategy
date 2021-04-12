@@ -4,6 +4,8 @@ import domain.TurnType.*
 
 class ControlBot : Bot {
 
+    override val name = "ControlBot"
+
     override fun makeTurn(game: Game): Turn {
         val move = game.board.findAllMovesSorted(game.rack).firstOrNull()
 
