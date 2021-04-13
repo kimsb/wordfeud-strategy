@@ -27,7 +27,7 @@
 - Øyvind: oyvindbot
 
 
-# Wordfeud-bot
+# Intro
 
 Utgangspunktet vårt er en Wordfeud-bot som alltid finner det høyest scorende legget! 
 Boten er bygget på en algoritme som ble beskrevet i artikkelen [The World’s Fastest Scrabble Program](https://www.cs.cmu.edu/afs/cs/academic/class/15451-s06/www/lectures/scrabble.pdf) helt tilbake i 1988 🤯
@@ -42,12 +42,28 @@ Den tar inn et parameter 'game' som gir deg:
 - board (oversikt over hvilke brikker som allerede ligger på brettet)
 - rack (hvilke brikker du sitter med)
 - score / opponentScore (stillingen)
-- scorelessTurns (ved 3 scorelessTurns avsluttes spillet, og begge spillere mister poengsum tilsvarende det som er igjen på racket)
+- scorelessTurns (ved 3 scorelessTurns avsluttes spillet, og begge spillere mister poengsum tilsvarende det som de har igjen på racket)
+
 Funskjonen returnerer en 'Turn' som kan være av følgende tre typer:
 - MOVE: du legger brikker på brettet og får poeng 🎉
 - SWAP: du bytter x antall av brikkene du har på racket ditt (dette er bare lov om det er minst 7 brikker igjen i 'bag')
 - PASS: du passer
 
-SWAP og PASS er såkalte scoreless turns, og ved tre sammenhengede scoreless turns avsluttes spillet.
+SWAP og PASS er scoreless turns.
 
-# Strategier
+## The real deal / Simulation
+Boten kan kjøres i 2 forskjellige modi:
+
+### The real deal
+I denne modusen logger boten seg på Wordfeud-APIet og kjører en loop hvor den venter på tur i pågående spill, og utførerer trekket som blir returnert av 'makeTurn'-funksjonen. 
+
+Jeg har laget en klient på https://algpip.netlify.app/ som dere kan bruke til å starte matcher mellom botene deres ⚔️
+
+### Simulation
+I denne modusen simuleres x antall kamper mot en 'controlBot'.
+Dette kan være en fin måte å finne ut om en ny strategi er gunstig eller ikke...
+
+Digital blomst 🌻 til den som klarer å oppnå høyest seiersprosent på 100 runder! 
+(én runde tilsvarer 2 kamper, med samme brikkefordeling, hvor hver bot får begynne én kamp hver)
+
+# Mulige strategier
