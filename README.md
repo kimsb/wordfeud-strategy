@@ -1,4 +1,4 @@
-# Prerequisites
+# Hjemmelekse
 
 - git clone dette prosjektet
 - Hvis du ikke har IntelliJ, last ned community-versjon her: https://www.jetbrains.com/idea/download
