@@ -5,7 +5,8 @@
 - I IntelliJ: "Open" og velg mappa du har klonet til
 - Velg "File" -> "Project Structure" og under "Project SDK" velger du versjon 11. Har du ingen versjon 11 i nedtrekkslista velger du "Add SDK" -> "Download JDK" og velger en versjon 11
 - Helt til høyre i IntelliJ er det en liten fane hvor det står "Maven", åpne den og trykk på "Reload all Maven Projects" (det resirkulerings-ikonet)
-- Naviger til src/main/kotlin/Main - og bytt ut "\<botname\>" med navnet på boten din (fra listen under). Nå skal det bare være å trykke på den grønne play-knappen ved siden av main-funksjonen. Hvis det printes: "Logged in as ..." så er alt tipp topp!
+- Naviger til Main.kt (src/main/kotlin/Main) - og bytt ut "\<botname\>" med navnet på boten din (fra listen under). 
+- Trykk på den grønne play-knappen ved siden av main-funksjonen. Hvis det printes: "Logged in as ..." så er alt tipp topp!
 - Trykk på den røde stop-knappen oppe til høyre, så du ikke spammer Wordfeud-APIet mer enn nødvendig 😬 , så er du klar for faggruppemøtet! 🎉
 
 **Wordfeud-brukere:**
