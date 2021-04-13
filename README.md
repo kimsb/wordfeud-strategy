@@ -62,6 +62,7 @@ Jeg har laget en klient på https://algpip.netlify.app/ som dere kan bruke til �
 ### Simulation
 I denne modusen simuleres x antall kamper mot en 'controlBot'.
 Dette kan være en fin måte å finne ut om en ny strategi er gunstig eller ikke...
+Simulering startes ved å kommentere ut 'The real deal' i Main-fila.
 
 Digital blomst 🌻 til den som klarer å oppnå høyest seiersprosent på 100 runder! 
 (én runde tilsvarer 2 kamper, med samme brikkefordeling, hvor hver bot får begynne én kamp hver)
