@@ -23,6 +23,7 @@
 - Ole-Martin: ole-martinbot
 - Simen E: endsjobot
 - Simen S: stoabot
+- Torbjørn: torbjornbot
 - Øyvind: oyvindbot
 
 
