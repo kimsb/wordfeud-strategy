@@ -67,4 +67,7 @@ Simulering startes ved å kommentere ut 'The real deal' i Main-fila.
 Digital blomst 🌻 til den som klarer å oppnå høyest seiersprosent på 100 runder! 
 (én runde tilsvarer 2 kamper, med samme brikkefordeling, hvor hver bot får begynne én kamp hver)
 
-# Mulige strategier
+# Strategi
+
+Ulike strategier kan være gunstige i ulike situasjoner...
+Men her følger en rekke ting det kan være lurt å tenke på!
