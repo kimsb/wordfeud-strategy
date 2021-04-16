@@ -91,7 +91,7 @@ Ekstra mye poeng blir det om man treffer
 - DW * DW (4 * ordpoeng 💰)
 - DW * TW (6 * ordpoeng 💰💰) 
 - TW * TW (9 * ordpoeng 💰💰💰)
-- 
+
 Enkelte brikker som W, C, Æ, Y kan gi veldig mye poeng om man får dem på bonusfeltene, selv med korte ord som WC, WU, CV, CD, PC, ÆS, ÆR, ÆH, HÆ, NÆ 
 
 ### Leave
