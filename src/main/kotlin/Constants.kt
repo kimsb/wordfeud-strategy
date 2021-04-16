@@ -34,6 +34,6 @@ object Constants {
             Pair('Å', 4))
 
     fun letterScore(letter: Char): Int {
-        return letterScores.getOrElse(letter, { 0 })
+        return letterScores.getOrElse(letter) { 0 }
     }
 }

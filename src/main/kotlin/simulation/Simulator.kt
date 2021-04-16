@@ -1,8 +1,11 @@
-package Simulation
+package simulation
 
 import Bot
-import Constants.letterDistribution
-import domain.*
+import Constants
+import domain.Board
+import domain.Game
+import domain.Rack
+import domain.Turn
 import domain.TurnType.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -12,8 +15,9 @@ import wordfeudapi.domain.ApiBoard
 import kotlin.system.measureTimeMillis
 
 class Simulator(
-    val myBot: Bot,
-    val controlBot: Bot
+    val bot: Bot,
+    val controlBot: Bot,
+    private val letterDistribution: String? = null
 ) {
 
     fun simulate(rounds: Int) {
@@ -29,12 +33,11 @@ class Simulator(
                 simulatedRounds = deferredSimulationResults.awaitAll()
             }
         }
-        printSimulatedRounds(myBot, controlBot, simulatedRounds, time)
+        printSimulatedRounds(bot, controlBot, simulatedRounds, time)
     }
 
     private fun simulateRound(): SimulatedRound {
-        var letters = letterDistribution.toList()
-        letters = letters.shuffled()
+        val letters = letterDistribution?.toList() ?: Constants.letterDistribution.toList().shuffled()
 
         return SimulatedRound(
             initialLetterDistribution = letters.joinToString(""),
@@ -44,8 +47,8 @@ class Simulator(
     }
 
     private fun simulateGame(bag: Bag, myBotStarts: Boolean): SimulatedGame {
-        var player1 = Player(bot = if (myBotStarts) myBot else controlBot, rack = Rack(bag.pickTiles(7)))
-        var player2 = Player(bot = if (myBotStarts) controlBot else myBot, rack = Rack(bag.pickTiles(7)))
+        var player1 = Player(bot = if (myBotStarts) bot else controlBot, rack = Rack(bag.pickTiles(7)))
+        var player2 = Player(bot = if (myBotStarts) controlBot else bot, rack = Rack(bag.pickTiles(7)))
         var board = emptyBoard()
         var scorelessTurns = 0
         var player1sTurn = true

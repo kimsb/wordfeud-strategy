@@ -1,4 +1,4 @@
-package Simulation
+package simulation
 
 import Bot
 import domain.Board

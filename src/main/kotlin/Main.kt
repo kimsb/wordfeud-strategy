@@ -1,4 +1,4 @@
-import Simulation.Simulator
+import simulation.Simulator
 
 object Main {
     @JvmStatic
@@ -11,10 +11,10 @@ object Main {
 
         //Simulation
         Simulator(
-            myBot = myBot,
-            controlBot = ControlBot(),
+            bot = myBot,
+            controlBot = ControlBot()
         ).simulate(
-            rounds = 100
+            rounds = 1
         )
     }
 }

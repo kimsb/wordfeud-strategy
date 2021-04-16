@@ -51,7 +51,7 @@ Funskjonen returnerer en 'Turn' som kan være av følgende tre typer:
 
 SWAP og PASS er scoreless turns.
 
-## The real deal / Simulation
+## The real deal / simulation
 Boten kan kjøres i 2 forskjellige modi:
 
 ### The real deal
@@ -59,7 +59,7 @@ I denne modusen logger boten seg på Wordfeud-APIet og kjører en loop hvor den 
 
 Jeg har laget en klient på https://algpip.netlify.app/ som dere kan bruke til å starte matcher mellom botene deres ⚔️
 
-### Simulation
+### simulation
 Enkeltkamper kan ofte avgjøres av tilfeldigheter (hvilke brikker du trekker). I denne modusen spiller tilfeldighet en mindre rolle, ettersom du kan simulere x antall kamper mot en 'controlBot'.
 Dette kan være en fin måte å finne ut om en ny strategi er gunstig eller ikke...
 Simulering startes ved å kommentere ut 'The real deal' i Main-fila.
