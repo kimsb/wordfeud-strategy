@@ -39,12 +39,12 @@ Og det er det vi skal se på i dag!
 
 Du skal implementere funksjonen `makeTurn` i fila `MyBot.kt`.
 Den tar inn et parameter `game` som gir deg:
-- board (oversikt over hvilke brikker som allerede ligger på brettet)
-- rack (hvilke brikker du sitter med)
-- score / opponentScore (stillingen)
-- scorelessTurns (ved 3 scorelessTurns avsluttes spillet, og begge spillere mister poengsum tilsvarende det som de har igjen på racket)
+- `board` (oversikt over hvilke brikker som allerede ligger på brettet)
+- `rack` (hvilke brikker du sitter med)
+- `score` / `opponentScore` (stillingen)
+- `scorelessTurns` (ved 3 scorelessTurns avsluttes spillet, og begge spillere mister poengsum tilsvarende det som de har igjen på racket)
 
-Funskjonen returnerer en 'Turn' som kan være av følgende tre typer:
+Funskjonen returnerer en `Turn` som kan være av følgende tre typer:
 - `MOVE`: du legger brikker på brettet og får poeng 🎉
 - `SWAP`: du bytter én eller flere av brikkene du har på racket ditt (dette er bare lov om det er minst 7 brikker igjen i posen)
 - `PASS`: du passer
