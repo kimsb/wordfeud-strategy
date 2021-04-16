@@ -104,7 +104,7 @@ Når det er mindre enn 7 brikker igjen i posen er det ikke lenger lov å bytte. 
 Når det er få brikker igjen, kan det også gi mening å regne på sannsynligheten for at motstanderen sitter med spesifikke brikker, for å vite om det er lurt å åpne/eller sperre for disse brikkene.
 
 Når posen er tom vet man hvilke brikker motstanderen sitter igjen med, og man kan derfor spille perfekt.
-Kanskje bør man legge et legg som gir veldig lite poeng, men som blokker en stor åpning for motstanderen? Eller kanskje til og med hindrer mulighetene for å legge ut en brikke i det hele tatt? Eller kanskje man skal lage en åpning som bare man selv kan utnytte?
+Kanskje bør man legge et legg som gir veldig lite poeng, men som blokker en stor åpning for motstanderen? Eller kanskje til og med hindrer mulighetene for å legge ut en brikke i det hele tatt? Kanskje er det best å legge én og én bokstav fremfor å bruke alle på en gang? Eller kanskje man skal lage en åpning som bare man selv kan utnytte?
 
 Hvis man legger sine siste brikker på brettet avsluttes spillet, og man får ekstra poeng tilsvarende poengsummen til brikkene som motspiller sitter igjen med. Disse poengene får i tillegg motspiller i minus, så her er det potensielt mye å tjene.
 
@@ -116,4 +116,4 @@ Den blanke brikken regnes som den beste brikken. Man får ingen poeng for den bl
 
 Første legget får man som regel ikke så veldig mye poeng for, kanskje bør man senke terskelen for å gjøre et bytte her?
 
-Hvilke ting du velger å fokusere på er opp til deg, eller kanskje du kommer på ander måter du kan sørge for at din bot blir helt uslåelig? Lykke til! 😎
+Hvilke ting du velger å fokusere på er opp til deg, kanskje du kommer på andre måter du kan sørge for at din bot blir helt uslåelig? Lykke til! 😎
