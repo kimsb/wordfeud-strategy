@@ -79,9 +79,20 @@ En ting er jo hvor mye poeng du selv får, men det er vel så viktig å tenke p�
 Et åpent brett gir generelt flere muligheter for å oppnå høye poengsummer, mens man på et lukket brett gjerne får lavere poengsummer.
 Normalt sett vil derfor den som leder ønske et mer lukket brett, mens den som ligger under vil håpe på et åpent brett.
 
-Det er essensielt å utnytte seg av bonusfeltene TW (trippelt ordpoeng), DW (dobbelt ordpoeng), TL (trippelt bokstavpoeng), DL (dobbelt bokstavpoeng).
-Og tilsvarende skummelt å gi motstanderen muligheten til å utnytte dem. Ekstra mye poeng blir det om man treffer DW * DW (4 * ord 💰), DW * TW (6 * ord 💰💰) eller TW * TW (9 * ord 💰💰💰). 
-Enkelte brikker som W, C, Æ, Y kan gi veldig mye poeng, om man får dem på bonusfeltene, selv med korte ord som WC, WU, CV, CD, PC, ÆS, ÆR, ÆH, HÆ, NÆ 
+Det er essensielt å utnytte seg av bonusfeltene 
+- TW (trippelt ordpoeng) 
+- DW (dobbelt ordpoeng) 
+- TL (trippelt bokstavpoeng) 
+- DL (dobbelt bokstavpoeng).
+
+Og tilsvarende skummelt å gi motstanderen muligheten til å utnytte dem. 
+
+Ekstra mye poeng blir det om man treffer 
+- DW * DW (4 * ordpoeng 💰)
+- DW * TW (6 * ordpoeng 💰💰) 
+- TW * TW (9 * ordpoeng 💰💰💰)
+- 
+Enkelte brikker som W, C, Æ, Y kan gi veldig mye poeng om man får dem på bonusfeltene, selv med korte ord som WC, WU, CV, CD, PC, ÆS, ÆR, ÆH, HÆ, NÆ 
 
 ### Leave
 Brikkene du blir sittende igjen med etter et legg, eller et bytte, kalles leave.
