@@ -66,7 +66,7 @@ Simulering startes ved å kommentere ut 'The real deal' i Main-fila.
 
 Digital blomst 🌻 til den som klarer å oppnå høyest seiersprosent på 100 runder! 
 (én runde tilsvarer 2 kamper, med samme brikkefordeling, hvor hver bot får begynne én kamp hver)
-For hver kamp som simuleres printes også brikkerekkefølgen for den kampen, så om man ønsker å re-simulere en gitt kamp for å sjekke om utfallet blir noe annet med en annen strategi, kan man lime inn brikkerekkefølgen som parameteret `letterDistribution` til funksjonen `simulate`.
+For hver kamp som simuleres printes også brikkerekkefølgen for den kampen, så om man ønsker å re-simulere en gitt kamp for å sjekke om utfallet blir noe annet med en annen strategi, kan man lime inn brikkerekkefølgen som parameteret `letterDistribution` til `Simulator`-konstruktøren.
 
 # Strategi
 
