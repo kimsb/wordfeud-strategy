@@ -121,7 +121,7 @@ I noen få tilfeller kan det faktisk også lønne seg å passe.
 F.eks om det har vært to scoreless turns, og du har en tilstrekkelig ledelse til å vinne (spillet avsluttes ved tre scoreless turns), eller dersom de eneste leggene du kan gjøre fører til at motstanderen får flere poeng enn de hadde gjort om du passet.
 
 ### Annet
-Den blanke brikken regnes som den beste brikken. Man får ingen poeng for den blanke brikken, men den gjør det mye lettere å oppnå høye poengsummer, f.eks ved å få lagt bingo. Når bør man bruke den blanke brikken, og når bør man spare den til senere?
+Den blanke brikken (`*`) regnes som den beste brikken. Man får ingen poeng for den blanke brikken, men den gjør det mye lettere å oppnå høye poengsummer, f.eks ved å få lagt bingo. Når bør man bruke den blanke brikken, og når bør man spare den til senere?
 
 Første legget får man som regel ikke så veldig mye poeng for, kanskje bør man senke terskelen for å gjøre et bytte her?
 
