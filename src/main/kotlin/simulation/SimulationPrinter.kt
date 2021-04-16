@@ -24,8 +24,8 @@ fun printSimulatedRounds(myBot: Bot, controlBot: Bot, simulatedRounds: List<Simu
             simulationResult.initialLetterDistribution
         )
     }
-    println("Simulation finished in $time ms${System.lineSeparator()}")
-    val myBotWins = simulatedRounds.map {
+    println("${System.lineSeparator()}Simulation finished in $time ms${System.lineSeparator()}")
+    val myBotWins = simulatedRounds.sumOf {
         when {
             it.simulatedGameA.myBotScore > it.simulatedGameA.controlBotScore -> 1.0
             it.simulatedGameA.myBotScore == it.simulatedGameA.controlBotScore -> 0.5
@@ -35,16 +35,16 @@ fun printSimulatedRounds(myBot: Bot, controlBot: Bot, simulatedRounds: List<Simu
             it.simulatedGameB.myBotScore == it.simulatedGameB.controlBotScore -> 0.5
             else -> 0.0
         }
-    }.sum()
+    }
 
     println(
         "${myBot.name}: $myBotWins wins (${myBotWins / (rounds * 2) * 100}%) total score: ${
-            simulatedRounds.map { it.simulatedGameA.myBotScore + it.simulatedGameB.myBotScore }.sum()
+            simulatedRounds.sumOf { it.simulatedGameA.myBotScore + it.simulatedGameB.myBotScore }
         }"
     )
     println(
         "${controlBot.name}: ${(rounds * 2) - myBotWins} wins (${100 - (myBotWins / (rounds * 2) * 100)}%) total score: ${
-            simulatedRounds.map { it.simulatedGameA.controlBotScore + it.simulatedGameB.controlBotScore }.sum()
+            simulatedRounds.sumOf { it.simulatedGameA.controlBotScore + it.simulatedGameB.controlBotScore }
         }"
     )
 }
@@ -62,7 +62,7 @@ private fun Board.toPrintableLines(): List<String> {
             }
         }.joinToString("  ") + " |"
     }
-    return (boardLines + listOf("-----------------------------------------------"))
+    return (boardLines + listOf("+---------------------------------------------+"))
 }
 
 private fun Simulator.SimulatedGame.printOutcome(): String {
@@ -91,25 +91,25 @@ private fun Simulator.SimulatedGame.printSimulatedRounds(
     val p1Moves = if (myBotStarts) myBotTurns else controlBotTurns
     val p2Moves = if (myBotStarts) controlBotTurns else myBotTurns
 
-    val headerTemplate = "| %16s | %3s | %-3s | %-16s |%n"
-    val formatTemplate = "| %16s | %3s | %-3s | %-16s |     %30s%n"
-    println("+------------------+-----+-----+------------------+")
-    print(
-        headerTemplate.format(
-            p1Name,
-            p1Score,
-            p2Score,
-            p2Name
-        )
-    )
-    println("+------------------+-----+-----+------------------+     -----------------------------------------------")
+    val formatTemplate = "| %16s | %3s | %-3s | %-16s |     %30s"
+    println("+------------------+-----+-----+------------------+     +---------------------------------------------+")
 
     val boardLines = this.board.toPrintableLines()
-    val lineCount = maxOf(17, p1Moves.size + 1)
+    val lineCount = maxOf(boardLines.size + 1, p1Moves.size + 3)
     (0..lineCount).forEach { i ->
-        print(
+        println(
             when {
-                i == p1Moves.size ->
+                i == 0 ->
+                    formatTemplate.format(
+                        p1Name,
+                        p1Score,
+                        p2Score,
+                        p2Name,
+                        boardLines[i]
+                    )
+                i == 1 ->
+                    "+------------------+-----+-----+------------------+     " + boardLines[i]
+                i == p1Moves.size+2 ->
                     formatTemplate.format(
                         "",
                         (p1Score - p1Moves.mapNotNull { it.move?.score }.sum()).toString(),
@@ -117,26 +117,24 @@ private fun Simulator.SimulatedGame.printSimulatedRounds(
                         "",
                         boardLines.getOrNull(i) ?: ""
                     )
-                i == p1Moves.size + 1 ->
+                i == p1Moves.size + 3 ->
                     "+------------------+-----+-----+------------------+     " + boardLines.getOrElse(
                         i,
-                        defaultValue = { "" }) + System.lineSeparator()
-                i > p1Moves.size + 1 ->
+                        defaultValue = { "" })
+                i > p1Moves.size + 3 ->
                     "                                                        " + boardLines.getOrElse(
                         i,
-                        defaultValue = { "" }) + System.lineSeparator()
+                        defaultValue = { "" })
                 else -> formatTemplate.format(
-                    p1Moves.getOrNull(i)?.printSimulatedRounds() ?: "",
-                    p1Moves.getOrNull(i)?.score() ?: "",
-                    p2Moves.getOrNull(i)?.score() ?: "",
-                    p2Moves.getOrNull(i)?.printSimulatedRounds() ?: "",
+                    p1Moves.getOrNull(i-2)?.printSimulatedRounds() ?: "",
+                    p1Moves.getOrNull(i-2)?.score() ?: "",
+                    p2Moves.getOrNull(i-2)?.score() ?: "",
+                    p2Moves.getOrNull(i-2)?.printSimulatedRounds() ?: "",
                     boardLines.getOrNull(i) ?: ""
                 )
             }
-
         )
     }
-    println()
 }
 
 private fun Turn.printSimulatedRounds(): String {

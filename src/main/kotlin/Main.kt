@@ -14,7 +14,7 @@ object Main {
             bot = myBot,
             controlBot = ControlBot()
         ).simulate(
-            rounds = 1
+            rounds = 100
         )
     }
 }
