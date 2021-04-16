@@ -116,4 +116,6 @@ Den blanke brikken regnes som den beste brikken. Man får ingen poeng for den bl
 
 Første legget får man som regel ikke så veldig mye poeng for, kanskje bør man senke terskelen for å gjøre et bytte her?
 
-Hvilke ting du velger å fokusere på er opp til deg, kanskje du kommer på andre måter du kan sørge for at din bot blir helt uslåelig? Lykke til! 😎
+Hvilke ting du velger å fokusere på er opp til deg, kanskje du kommer på andre måter du kan sørge for at din bot blir helt uslåelig? 
+
+Lykke til! 😎
