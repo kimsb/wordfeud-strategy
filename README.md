@@ -112,6 +112,8 @@ Når det er mindre enn 7 brikker igjen i posen er det ikke lenger lov å bytte. 
 
 Når det er få brikker igjen, kan det også gi mening å regne på sannsynligheten for at motstanderen sitter med spesifikke brikker, for å vite om det er lurt å åpne/eller sperre for disse brikkene.
 
+Kanskje er det lurt å sørge for at det ligger minst én brikke igjen i posen, så motstanderen ikke kan gå ut med en bingo?
+
 Når posen er tom vet man hvilke brikker motstanderen sitter igjen med, og man har derfor muligheten til å spille perfekt.
 Kanskje bør man legge et legg som gir veldig lite poeng, men som blokker en stor åpning for motstanderen? Eller kanskje til og med hindrer mulighetene for å legge ut en brikke i det hele tatt? Kanskje er det best å legge én og én bokstav fremfor å bruke alle på en gang? Eller kanskje man skal lage en åpning som bare man selv kan utnytte?
 
