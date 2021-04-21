@@ -4,10 +4,10 @@ object Main {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val myBot = MyBot("<botname>")
+        val myBot = MyBot("bovimbot")
 
         //The real deal
-        WFApi(bot = myBot)
+        //WFApi(bot = myBot)
 
         //Simulation
         Simulator(
