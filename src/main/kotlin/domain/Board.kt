@@ -2,6 +2,7 @@ package domain
 
 import wordfeudapi.domain.ApiBoard
 import wordfeudapi.domain.ApiTile
+import java.lang.StringBuilder
 import kotlin.math.max
 
 class Board(squares: List<List<Square>>) {
@@ -104,6 +105,16 @@ class Board(squares: List<List<Square>>) {
             mutableSquares[it.second.row][it.second.column] = Square(Tile(it.first.letter))
         }
         return Board(mutableSquares)
+    }
+
+    fun lettersInBagOrOpponentsRack(myRack: Rack): String {
+        val allLetters = StringBuilder(Constants.letterDistribution)
+        val lettersOnBoard = squares.flatten().filter { it.isOccupied() }.map { it.getLetter()!! }
+        (myRack.tiles + lettersOnBoard).forEach {
+        val letter = if (it.isLowerCase()) '*' else it
+            allLetters.deleteCharAt(allLetters.indexOf(letter))
+        }
+        return allLetters.toString()
     }
 
     fun bagCount(): Int {
