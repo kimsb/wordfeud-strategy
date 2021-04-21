@@ -4,7 +4,7 @@
 - Hvis du ikke har IntelliJ, last ned community-versjon her: https://www.jetbrains.com/idea/download
 - I IntelliJ: "Open" og velg mappa du har klonet til
 - Velg "File" -> "Project Structure" og under "Project SDK" velger du versjon 11. Har du ingen versjon 11 i nedtrekkslista velger du "Add SDK" -> "Download JDK" og velger en versjon 11
-- Helt til høyre i IntelliJ er det en liten fane hvor det står "Maven", åpne den og trykk på "Reload all Maven Projects" (det resirkulerings-ikonet) for å laste ned dependencies. Dersom du allerede har installert Maven med en prosjekt-spesifikk `settings.xml` kan du få trøbbel med å laste ned dependencies. I så fall kan du gå til "IntelliJ IDEA" -> "Preferences" -> "Build, Execution, Deployment" -> "Maven" og sette "User settings file" til vedlagte `default_settings.xml`
+- Helt til høyre i IntelliJ er det en liten fane hvor det står "Maven", åpne den og trykk på "Reload all Maven Projects" (det resirkulerings-ikonet) for å laste ned dependencies. Dersom du allerede har installert Maven med en prosjekt-spesifikk `settings.xml` kan du få trøbbel med å laste ned dependencies. I så fall kan du gå til "IntelliJ IDEA" -> "Preferences" -> "Build, Execution, Deployment" -> "Build Tools" -> "Maven" og sette "User settings file" til vedlagte `default_settings.xml`
 - Naviger til `Main.kt` ("Project"-fanen helt til venstre -> wordfeud-strategy/src/main/kotlin/Main) 
 - Bytt ut "\<botname\>" med navnet på boten din (fra listen under). 
 - Trykk på den grønne play-knappen ved siden av main-funksjonen. Hvis det printes: "Logged in as ..." så er alt tipp topp!
