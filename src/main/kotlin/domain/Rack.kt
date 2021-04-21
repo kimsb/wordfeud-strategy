@@ -28,6 +28,6 @@ data class Rack(
     }
 
     fun score(): Int {
-        return tiles.map { letterScore(it) }.sum()
+        return tiles.sumOf { letterScore(it) }
     }
 }
