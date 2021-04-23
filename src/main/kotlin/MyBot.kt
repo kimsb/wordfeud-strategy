@@ -3,7 +3,6 @@ import domain.Move
 import domain.Rack
 import domain.Turn
 import domain.TurnType.*
-import kotlin.time.measureTime
 
 class MyBot(override val name: String) : Bot {
 
@@ -15,6 +14,14 @@ class MyBot(override val name: String) : Bot {
             } else {
                 Turn(turnType = PASS)
             }
+
+        val winningEndgameTurn = winningEndgameMove(game, allMovesSorted)
+        if (winningEndgameTurn != null) {
+            return when(winningEndgameTurn.turnType) {
+                MOVE -> Turn(turnType = MOVE, move = winningEndgameTurn.move)
+                else -> Turn(turnType = PASS)
+            }
+        }
 
         //swap
         if (game.board.swapIsAllowed()) {
