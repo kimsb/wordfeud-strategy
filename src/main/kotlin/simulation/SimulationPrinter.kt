@@ -38,12 +38,12 @@ fun printSimulatedRounds(myBot: Bot, controlBot: Bot, simulatedRounds: List<Simu
     }
 
     println(
-        "${myBot.name}: $myBotWins wins (${myBotWins / (rounds * 2) * 100}%) total score: ${
+        "${myBot.name}: $myBotWins wins (${"%.2f".format(myBotWins / (rounds * 2) * 100)}%) total score: ${
             simulatedRounds.sumOf { it.simulatedGameA.myBotScore + it.simulatedGameB.myBotScore }
         }"
     )
     println(
-        "${controlBot.name}: ${(rounds * 2) - myBotWins} wins (${100 - (myBotWins / (rounds * 2) * 100)}%) total score: ${
+        "${controlBot.name}: ${(rounds * 2) - myBotWins} wins (${"%.2f".format(100 - (myBotWins / (rounds * 2) * 100))}%) total score: ${
             simulatedRounds.sumOf { it.simulatedGameA.controlBotScore + it.simulatedGameB.controlBotScore }
         }"
     )
