@@ -47,9 +47,9 @@ class BoardTest {
             ApiTile(6, 7, 'Y', false),
             ApiTile(7, 7, 'O', false)
         )
-        val allMoves = Board(standardApiBoard(), apiTiles).findAllMoves(Rack("ERNATSL".toList()))
+        val allMoves = Board(standardApiBoard(), apiTiles).findAllMovesSorted(Rack("ERNATSL".toList()))
 
-        assertThat(allMoves.size).isEqualTo(1568)
+        assertThat(allMoves.size).isEqualTo(1585)
     }
 
     @Test
@@ -58,9 +58,9 @@ class BoardTest {
             ApiTile(6, 7, 'Y', false),
             ApiTile(7, 7, 'O', false)
         )
-        val allMoves = Board(standardApiBoard(), apiTiles).findAllMoves(Rack("ERNATS*".toList()))
+        val allMoves = Board(standardApiBoard(), apiTiles).findAllMovesSorted(Rack("ERNATS*".toList()))
 
-        assertThat(allMoves.size).isEqualTo(17244)
+        assertThat(allMoves.size).isEqualTo(17625)
     }
 
     @Nested
@@ -74,7 +74,7 @@ class BoardTest {
             )
 
             val highestScoringMove = Board(standardApiBoard(), apiTiles)
-                .findAllMoves(Rack("HIMLANÅ".toList()))
+                .findAllMovesSorted(Rack("HIMLANÅ".toList()))
                 .maxByOrNull(Move::score)!!
 
             assertThat(highestScoringMove.word).isEqualTo("HEIMLÅNA")
@@ -89,7 +89,7 @@ class BoardTest {
             )
 
             val highestScoringMove = Board(standardApiBoard(), apiTiles)
-                .findAllMoves(Rack("HIMLANÅ".toList()))
+                .findAllMovesSorted(Rack("HIMLANÅ".toList()))
                 .maxByOrNull(Move::score)!!
 
             assertThat(highestScoringMove.word).isEqualTo("HEIMLÅNA")
@@ -104,7 +104,7 @@ class BoardTest {
             )
 
             val highestScoringMove = Board(standardApiBoard(), apiTiles)
-                .findAllMoves(Rack("EIMLANÅ".toList()))
+                .findAllMovesSorted(Rack("EIMLANÅ".toList()))
                 .maxByOrNull(Move::score)!!
 
             assertThat(highestScoringMove.word).isEqualTo("HEIMLÅNA")
@@ -119,7 +119,7 @@ class BoardTest {
             )
 
             val highestScoringMove = Board(standardApiBoard(), apiTiles)
-                .findAllMoves(Rack("EIMLANÅ".toList()))
+                .findAllMovesSorted(Rack("EIMLANÅ".toList()))
                 .maxByOrNull(Move::score)!!
 
             assertThat(highestScoringMove.word).isEqualTo("HEIMLÅNA")
