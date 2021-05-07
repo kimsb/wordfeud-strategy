@@ -33,13 +33,13 @@ data class Row(
 
     fun crossChecks(): List<Square> {
         return squares.mapIndexed { squareIndex, square ->
-            val bitSet = BitSet(26)
+            val bitSet = BitSet(VALID_LETTERS.length)
             var crossSum: Int? = null
             if (!square.isOccupied()) {
                 val prefix = getPrefix(squareIndex)
                 val suffix = getSuffix(squareIndex)
                 if (prefix.isEmpty() && suffix.isEmpty()) {
-                    bitSet.flip(0, 26)
+                    bitSet.flip(0, VALID_LETTERS.length)
                 } else {
                     VALID_LETTERS.forEachIndexed { bitSetIndex, letter ->
                         bitSet.set(bitSetIndex, contains(prefix + letter + suffix))

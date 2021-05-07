@@ -5,7 +5,7 @@ import java.util.*
 
 data class Square(
     val tile: Tile? = null,
-    val crossChecks: BitSet = BitSet(26),
+    val crossChecks: BitSet = BitSet(VALID_LETTERS.length),
     val isAnchor: Boolean = false,
     val crossSum: Int? = null,
     val letterMultiplier: Int = 1,

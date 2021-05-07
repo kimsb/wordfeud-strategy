@@ -19,19 +19,19 @@ class RowTest {
         assertThat(squares[1].crossChecks).`as`("Her skulle alle bits vært satt").isEqualTo(fullBitSet())
         assertThat(squares[2].crossChecks).`as`("Her skulle alle bits vært satt").isEqualTo(fullBitSet())
         assertThat(squares[3].crossChecks).`as`("Her skulle alle bits vært satt").isEqualTo(fullBitSet())
-        assertThat(squares[4].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(BitSet(26))
-        assertThat(squares[5].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(BitSet(26))
-        assertThat(squares[6].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(BitSet(26))
-        assertThat(squares[7].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(BitSet(26))
-        assertThat(squares[8].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(BitSet(26))
-        assertThat(squares[9].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(BitSet(26))
-        val e = BitSet(26)
+        assertThat(squares[4].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(emptyBitSet())
+        assertThat(squares[5].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(emptyBitSet())
+        assertThat(squares[6].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(emptyBitSet())
+        assertThat(squares[7].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(emptyBitSet())
+        assertThat(squares[8].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(emptyBitSet())
+        assertThat(squares[9].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(emptyBitSet())
+        val e = emptyBitSet()
         e.flip(VALID_LETTERS.indexOf('E'))
         assertThat(squares[10].crossChecks).`as`("Her skulle bare bit e (index 4) vært satt").isEqualTo(e)
-        assertThat(squares[11].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(BitSet(26))
-        assertThat(squares[12].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(BitSet(26))
-        assertThat(squares[13].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(BitSet(26))
-        val ae = BitSet(26)
+        assertThat(squares[11].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(emptyBitSet())
+        assertThat(squares[12].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(emptyBitSet())
+        assertThat(squares[13].crossChecks).`as`("Her skulle ingen bits vært satt").isEqualTo(emptyBitSet())
+        val ae = emptyBitSet()
         ae.flip(VALID_LETTERS.indexOf('A'))
         ae.flip(VALID_LETTERS.indexOf('E'))
         assertThat(squares[14].crossChecks).`as`("Her skulle bit a og e (index 0 og 4) vært satt").isEqualTo(ae)
@@ -95,9 +95,13 @@ class RowTest {
     }
 
     private fun fullBitSet(): BitSet {
-        val bitSet = BitSet(26)
-        bitSet.flip(0, 26)
+        val bitSet = BitSet(VALID_LETTERS.length)
+        bitSet.flip(0, VALID_LETTERS.length)
         return bitSet
+    }
+
+    private fun emptyBitSet(): BitSet {
+        return BitSet(VALID_LETTERS.length)
     }
 }
 
