@@ -1,3 +1,5 @@
+package mybot
+
 import domain.*
 import domain.TurnType.MOVE
 

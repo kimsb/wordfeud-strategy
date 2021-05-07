@@ -1,3 +1,6 @@
+package mybot
+
+import Bot
 import domain.Game
 import domain.Move
 import domain.Rack
@@ -15,13 +18,13 @@ class MyBot(override val name: String) : Bot {
                 Turn(turnType = PASS)
             }
 
-        val winningEndgameTurn = winningEndgameMove(game, allMovesSorted)
+        /*val winningEndgameTurn = winningEndgameMove(game, allMovesSorted)
         if (winningEndgameTurn != null) {
             return when(winningEndgameTurn.turnType) {
                 MOVE -> Turn(turnType = MOVE, move = winningEndgameTurn.move)
                 else -> Turn(turnType = PASS)
             }
-        }
+        }*/
 
         //swap
         if (game.board.swapIsAllowed()) {
