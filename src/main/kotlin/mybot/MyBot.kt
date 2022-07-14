@@ -1,17 +1,21 @@
 package mybot
 
 import Bot
+import applyStrategies
 import domain.Game
-import domain.Move
-import domain.Rack
 import domain.Turn
-import domain.TurnType.*
+import strategies.PenaltyStrategy
+import strategies.WeightedStrategy
 
-class MyBot(override val name: String) : Bot {
+class MyBot(override val name: String, val strategies: List<WeightedStrategy>, val penaltyStrategy: PenaltyStrategy? = null): Bot {
 
     override fun makeTurn(game: Game): Turn {
+        return applyStrategies(game, strategies, penaltyStrategy)
+    }
+
+    /*override fun makeTurn(game: Game): Turn {
         val allMovesSorted = game.board.findAllMovesSorted(game.rack)
-        val move = allMovesSorted.firstOrNull()
+        val highestScoringMove = allMovesSorted.firstOrNull()
             ?: return if (game.board.swapIsAllowed()) {
                 bestSwap(game.rack)
             } else {
@@ -40,7 +44,7 @@ class MyBot(override val name: String) : Bot {
                 }
             }
             //swap when best move < 15p
-            if (move.score < 15) {
+            if (highestScoringMove.score < 15) {
                 return bestSwap(game.rack)
             }
         }
@@ -49,9 +53,6 @@ class MyBot(override val name: String) : Bot {
 
         // sjekk legg mot (bingo: ERANSTL), (openEAwayFromBingo: FARGBOK), (bigLetters: CREWPUD)
         // relativeScore
-
-        //leave
-        //kvitte seg med W
 
         //endgame
         if (game.board.bagCount() == 0) {
@@ -63,55 +64,69 @@ class MyBot(override val name: String) : Bot {
             }
         }
 
+
+        //for performance - top 20 words
+        val top10 = allMovesSorted.subList(0, minOf(allMovesSorted.size, 10))
+
+        val sortedByDescendingRelativeScore = top10.sortedByDescending { it.score + getRelativeScore(game, it) }
+        val highestRelativeScoringWord = sortedByDescendingRelativeScore.first()
+
+        if (highestRelativeScoringWord.score != highestScoringMove.score) {
+            println("ikke høyest scorende, legger ${highestRelativeScoringWord.word}: ${highestRelativeScoringWord.score}p, i stedet for ${highestScoringMove.word}: ${highestScoringMove.score}p")
+            return Turn(turnType = MOVE, move = highestRelativeScoringWord)
+        }
+
         //minst 15p ekstra for blank brikke
-        //Legger bestWithoutBlank: move: WAlKIE 53, bestWithout: KAIET 39 - her burde WAlKIE legges...
-        if (containsBlank(move)) {
+        //TODO Legger bestWithoutBlank: move: WAlKIE 53, bestWithout: KAIET 39 - her burde WAlKIE legges...
+        if (containsBlank(highestScoringMove)) {
             val bestWithoutBlank = allMovesSorted.firstOrNull { move1 ->
                 move1.addedTiles.map { it.first }.none { it.letter.isLowerCase() }
             }
-            if (bestWithoutBlank != null && (bestWithoutBlank.score + 15) > move.score) {
+            if (bestWithoutBlank != null && (bestWithoutBlank.score + 15) > highestScoringMove.score) {
                 if (bestWithoutBlank.score < 15 && game.board.swapIsAllowed()) {
                     println("Har blank men bytter, for beste legg uten blank gir ${bestWithoutBlank.score} poeng")
                     return bestSwap(rack = game.rack)
                 }
-                println("Legger bestWithoutBlank: move: ${move.word} ${move.score}, bestWithout: ${bestWithoutBlank.word} ${bestWithoutBlank.score}")
+                println("Legger bestWithoutBlank: move: ${highestScoringMove.word} ${highestScoringMove.score}, bestWithout: ${bestWithoutBlank.word} ${bestWithoutBlank.score}")
                 return Turn(turnType = MOVE, move = bestWithoutBlank)
             }
         }
 
+        return Turn(turnType = MOVE, move = highestScoringMove)
+    }
 
-        return Turn(turnType = MOVE, move = move)
+    private fun getRelativeScore(game: Game, move: Move): Double {
+        var relativeScore = 0.0
+
+        //for ENDGAME
+        //ADD 20 relative points if one or more of opponents tiles cant ble placed
+        /*if (stopsOpponentFromPlacingTile(game, move)) {
+            relativeScore += 100
+        }*/
+
+        //leave
+        //relativeScore -= leaveScore(rackAfterMove(game.rack, move))
+
+        //board position
+        //relativeScore -= opponentScoreAfterMove(game, move)
+
+        return relativeScore
+    }
+
+    private fun rackAfterMove(rack: Rack, move: Move): Rack {
+        var rackAfterMove = rack
+        move.addedTiles.map { it.first.letter }.forEach {
+            rackAfterMove = if (it.isLowerCase()) {
+                rackAfterMove.without('*')
+            } else {
+                rackAfterMove.without(it)
+            }
+        }
+        return rackAfterMove
     }
 
     private fun containsBlank(move: Move): Boolean {
         return move.addedTiles.map { it.first }.any { it.letter.isLowerCase() }
-    }
-
-    private fun bestSwap(rack: Rack): Turn {
-        val rackWithoutBlank = if (rack.contains('*')) rack.without('*') else rack
-
-        val tilesToSwap = when {
-            rackWithoutBlank.tiles.contains('E') && rackWithoutBlank.tiles.contains('R') ->
-                rackWithoutBlank.without('E').without('R').tiles
-            rackWithoutBlank.tiles.contains('E') && rackWithoutBlank.tiles.contains('N') ->
-                rackWithoutBlank.without('E').without('N').tiles
-            rackWithoutBlank.tiles.contains('E') && rackWithoutBlank.tiles.contains('S') ->
-                rackWithoutBlank.without('E').without('S').tiles
-            rackWithoutBlank.tiles.contains('E') && rackWithoutBlank.tiles.contains('T') ->
-                rackWithoutBlank.without('E').without('T').tiles
-            rackWithoutBlank.tiles.contains('A') && rackWithoutBlank.tiles.contains('R') ->
-                rackWithoutBlank.without('A').without('R').tiles
-            rackWithoutBlank.tiles.contains('A') && rackWithoutBlank.tiles.contains('N') ->
-                rackWithoutBlank.without('A').without('N').tiles
-            rackWithoutBlank.tiles.contains('A') && rackWithoutBlank.tiles.contains('S') ->
-                rackWithoutBlank.without('A').without('S').tiles
-            rackWithoutBlank.tiles.contains('A') && rackWithoutBlank.tiles.contains('T') ->
-                rackWithoutBlank.without('A').without('T').tiles
-            rackWithoutBlank.tiles.contains('E') ->
-                rackWithoutBlank.without('E').tiles
-            else -> rackWithoutBlank.tiles
-        }
-        return Turn(turnType = SWAP, tilesToSwap = tilesToSwap)
     }
 
     private fun moveFinishesGame(game: Game, move: Move): Boolean {
@@ -124,20 +139,7 @@ class MyBot(override val name: String) : Bot {
         }.sum()
         return game.board.bagCount() == 0
             && (game.score + move.score + scoreOnOpponentsRack > game.opponentScore - scoreOnOpponentsRack)
-    }
+    }*/
 
 
-}
-
-data class RelativeMove(
-    val move: Move,
-    val relativeScore: Double
-) {
-    fun add(score: Double): RelativeMove {
-        return this.copy(relativeScore = relativeScore + score)
-    }
-
-    fun subtract(score: Double): RelativeMove {
-        return this.copy(relativeScore = relativeScore - score)
-    }
 }

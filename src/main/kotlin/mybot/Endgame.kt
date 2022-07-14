@@ -3,6 +3,28 @@ package mybot
 import domain.*
 import domain.TurnType.MOVE
 
+fun stopsOpponentFromPlacingTile(game: Game, myMove: Move): Boolean {
+    if (game.board.bagCount() > 0) {
+        return false
+    }
+
+    val boardWithMyMove = game.board.withMove(myMove)
+    val opponentRack = Rack(game.board.lettersInBagOrOpponentsRack(game.rack).toList())
+    val opponentsMovesAfterMyMove = boardWithMyMove.findAllMovesSorted(opponentRack)
+
+    val lettersOpponentCanPlace = mutableSetOf<Char>()
+
+    opponentsMovesAfterMyMove.forEach { opponentMove ->
+        lettersOpponentCanPlace.addAll(opponentMove.addedTiles.map { tile ->
+            tile.first.letter
+        })
+        if (lettersOpponentCanPlace.size == opponentRack.tiles.size) {
+            return true
+        }
+    }
+    return false
+}
+
 //TODO return pass if it wins the game
 fun winningEndgameMove(game: Game, allMoves: List<Move>): Turn? {
     if (game.board.bagCount() > 0) {
@@ -60,7 +82,7 @@ private fun winsGame(
     //println("${"\t".repeat(moveCount)}${move.word}: checking ${allOpponentMoves.size} opponentMoves...")
     if (allOpponentMoves.isEmpty()) {
 
-        if(newScore - newRack.score() > opponentScore - opponentRack.score()) {
+        if (newScore - newRack.score() > opponentScore - opponentRack.score()) {
             return true
         }
 

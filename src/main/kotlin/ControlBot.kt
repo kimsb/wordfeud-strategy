@@ -1,18 +1,12 @@
 import domain.Game
 import domain.Turn
-import domain.TurnType.*
+import strategies.WeightedStrategy
 
-class ControlBot : Bot {
+class ControlBot(val strategies: List<WeightedStrategy>) : Bot {
 
     override val name = "ControlBot"
 
     override fun makeTurn(game: Game): Turn {
-        val move = game.board.findAllMovesSorted(game.rack).firstOrNull()
-
-        return when {
-            move != null -> Turn(turnType = MOVE, move = move)
-            game.board.swapIsAllowed() -> Turn(turnType = SWAP, tilesToSwap = game.rack.tiles)
-            else -> Turn(turnType = PASS)
-        }
+        return applyStrategies(game, strategies)
     }
 }

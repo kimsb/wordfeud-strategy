@@ -65,7 +65,28 @@ class Simulator(
                 opponentScore = opponent.score,
                 scorelessTurns = scorelessTurns
             )
+
+            //PRINT MYBOT-MOVES
+            /*if (myBotStarts && player1sTurn || (myBotStarts.not() && player1sTurn.not())) {
+                println("Rack: ${game.rack.tiles.joinToString("")}")
+            }*/
+
             val turn = playerInMove.bot.makeTurn(game)
+
+            //PRINT MYBOT-MOVES
+            /*if (myBotStarts && player1sTurn || (myBotStarts.not() && player1sTurn.not())) {
+                if (turn.turnType == MOVE) {
+                    println(
+                        "legger: ${turn.move!!.word}, bruker: ${
+                            turn.move.addedTiles.map { it.first.letter }.joinToString("")
+                        }"
+                    )
+                } else {
+                    println(turn.turnType)
+                }
+                println()
+            }*/
+
             playerInMove.turns.add(turn)
 
             when (turn.turnType) {
