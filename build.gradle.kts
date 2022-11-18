@@ -20,3 +20,5 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
     testImplementation("org.assertj:assertj-core:3.9.1")
 }
+
+java { sourceCompatibility = JavaVersion.VERSION_17 }

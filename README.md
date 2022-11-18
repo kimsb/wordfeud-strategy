@@ -7,7 +7,6 @@
 - Naviger til `Main.kt` ("Project"-fanen helt til venstre -> wordfeud-strategy/src/main/kotlin/Main) 
 - Bytt ut "\<botname\>" med navnet på boten din (fra listen under). 
 - Trykk på den grønne play-knappen ved siden av main-funksjonen. Hvis det printes: "Logged in as ..." så er alt tipp topp!
-  (Ser du ingen grønn play-knapp kan du høyre-klikke på kotlin-mappa under src/main, og velg "Mark Directory as" -> "Sources Root")
 - Trykk på den røde stop-knappen oppe til høyre, så du ikke spammer Wordfeud-APIet mer enn nødvendig 😬 , så er du klar for faggruppemøtet! 🎉
 
 **Wordfeud-brukere:**
