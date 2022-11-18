@@ -7,7 +7,7 @@ object Dictionary {
     private val instance: MDAG
 
     init {
-        val words = Main::class.java.getResourceAsStream("nsf2021.txt")!!
+        val words = Main::class.java.getResourceAsStream("nsf2022.txt")!!
             .bufferedReader()
             .readLines()
             .filter(this::wordContainsValidLetters)
