@@ -1,14 +1,14 @@
 import Constants.VALID_LETTERS
 import mdag.MDAG
 import mdag.MDAGNode
+import java.io.File
 
 object Dictionary {
 
     private val instance: MDAG
 
     init {
-        val words = Main::class.java.getResourceAsStream("/nsf2022.txt")!!
-            .bufferedReader()
+        val words = File("src/main/resources/nsf2022.txt")
             .readLines()
             .filter(this::wordContainsValidLetters)
         instance = MDAG(words)
